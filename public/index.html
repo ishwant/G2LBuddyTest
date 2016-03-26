@@ -1,0 +1,205 @@
+<!doctype html>
+<html ng-app="DiabetikApp">
+<head>
+    <title>G2L BUDDY</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+    <style>
+
+        .jumbotron {
+            background-color:#79a9d2;
+        }
+        .heading {
+            font-weight: bold; 
+            font-family:Times New Roman, Times, serif; 
+            font-size: 100px;
+        }
+        table.menu, th, td.menu {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            /*text-transform: capitalize;*/
+        }
+        .box {
+            height:148px;
+            width:227px;
+            background-image: url(images/g.png);
+            display: inline-block;
+            border-collapse: collapse;
+            cursor: pointer; 
+            cursor: hand;
+        }
+        .box:hover
+        {
+        opacity: 0.4;
+        }
+        
+        .box2 {
+            height:148px;
+            width:227px;
+            background-image: url(images/y.png);
+            display: inline-block;
+            border-collapse: collapse;
+            cursor: pointer; 
+            cursor: hand;
+        }
+        .box2:hover
+        {
+        opacity: 0.4;
+        }
+
+        
+        <!-- For the button and search field on main page -->
+        input {
+          width: 15%;
+          font-weight: bold;
+          background-color: transparent;
+          border: 1px solid;
+          font-size: 13px;
+          font-family: Arial;
+          float: left;
+        }
+        input:nth-last-child(-n+2) {
+          float: right;
+        }
+    </style>
+</head>
+<body>
+    <!-- logo image -->
+ <!--   <a ng-if="currentUser" href= "#/home">
+        <img src="img/G2L MOBILE BUDDY.PNG" 
+         height="62" width="80" 
+         style="position:fixed; top:10px; left:10px;">
+     </a> -->
+     <a ng-if="!currentUser" href= "#/">
+        <img src="img/G2L MOBILE BUDDY.PNG" 
+         height="62" width="80" 
+         style="position:fixed; top:10px; left:10px;">
+     </a> 
+
+    <!-- Nav bar start -->
+    <span ng-show="currentUser">
+        <nav class="navbar navbar-default" ng-controller="NavCtrl">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/home">
+                        <img alt="Brand" src="img/G2L MOBILE BUDDY.PNG" height="30" width="45" >
+                    </a>
+                </div>
+                
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#/home">
+                            <b>G2L BUDDY!</b>
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-class="{active: isActive('/home')}">
+                        <a href="#/home">
+                            <span class="glyphicon glyphicon-home" style="color: #006dcc"></span> 
+                            <b>HOME</b>
+                        </a>
+                    </li>
+
+                    <!-- Only Admin -->
+                    <li ng-if="((currentUser.role.indexOf('admin') > -1)||(currentUser.role.indexOf('super') > -1))" ng-class="{ active: isActive('/CaseWorkers')}">
+                        <a href="#/CaseWorkers" ng-click="navbar.selectedTab(2)">
+                            <span class="glyphicon glyphicon-user" style="color: #006dcc"></span>
+                            <b>CASE WORKERS</b>
+                        </a>
+                    </li>
+                    <li ng-if="((currentUser.role.indexOf('admin') > -1)||(currentUser.role.indexOf('super') > -1))" ng-class="{ active: isActive('/programs')}">
+                        <a href="#/programs" ng-click="navbar.selectedTab(3)">
+                            <span class="glyphicon glyphicon-th-list" style="color: #006dcc"></span>
+                            <b>PROGRAMS</b>
+                        </a>
+                    </li>
+                    <li ng-if="((currentUser.role.indexOf('admin') > -1)||(currentUser.role.indexOf('super') > -1))" ng-class="{ active: isActive('/admins')}">
+                        <a href="#/admins" ng-click="navbar.selectedTab(4)">
+                            <span class="glyphicon glyphicon-king" style="color: #006dcc"></span>
+                            <b>ADMINS</b>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="logout()">
+                            <b>Logout</b>
+                            <span class="glyphicon glyphicon-log-out" style="color: #006dcc"></span> 
+                        </a>
+                    </li>
+                </ul>                
+            </div>
+        </nav>
+    </span>
+    <center>
+        <div ng-view=""></div>
+    </center>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-aria.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-cookies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-messages.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-sanitize.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-touch.js"></script> 
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/html" src="js/validator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>   
+    
+
+    <script src="Modules/Core/Controllers/app.js"></script>
+    <script src="Modules/Core/Controllers/navigationController.js"></script>
+    <script src="Modules/Patients/Controllers/patientCtrl.js"></script>
+    <script src="Modules/Patients/Controllers/dirPagination.js"></script>
+    <script src="Modules/Signup/Controllers/loginCtrl.js"></script>
+    <script src="Modules/Signup/Controllers/signupCtrl.js"></script>
+    <script src="Modules/Programs/Controllers/programCtrl.js"></script>
+
+    <script src="Modules/Case Workers/Controllers/caseWorkerCtrl.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="js/tableExport.js"></script>
+    <script type="text/javascript" src="js/jquery.base64.js"></script>
+    <script type="text/javascript" src="js/html2canvas.js"></script>
+    <script type="text/javascript" src="js/sprintf.js"></script>
+    <script type="text/javascript" src="js/jspdf.js"></script>
+    <script type="text/javascript" src="js/base64.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.6/ng-csv.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.6/ng-csv.min.js"></script>
+
+    <script src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.0.16/jspdf.plugin.autotable.js"></script>
+    
+
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+
+    <script >
+
+    </script> 
+
+</body>
+</html>
